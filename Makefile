@@ -10,10 +10,10 @@ all: $(NAME)
 
 $(NAME): $(OBJS) ./libft/libft.a
 	ar rc $@ $^
+	ranlib $@
 
 %.o: %.c
-	gcc $(CFLAGS) -c -I . -o $@ $<
-	ranlib $@
+	gcc $(CFLAGS) -c -I . -I ./libft -o $@ $<
 
 ./libft/libft.a: ./libft/*.c
 	cd libft && $(MAKE)
