@@ -23,8 +23,7 @@
 # define L_LENGTH 3
 # define LL_LENGTH 4
 # define J_LENGTH 5
-# define ET_LENGTH 6
-# define Z_LENGTH 7
+# define Z_LENGTH 6
 
 typedef	struct	s_conv
 {
