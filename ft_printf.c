@@ -18,24 +18,10 @@
 #include <unistd.h>
 #include <ft_printf.h>
 
-static const char *format_characters = "sSpdDioOuUxXcC";
 
-static int		is_format_char(char c)
+int				ft_printf(const char *format, ...)
 {
-	 const char *compare;
-
-	compare = format_characters;
-	while (*compare)
-	{
-		if (*compare == c)
-			return (true);
-		compare++;
-	}
-	return (false);
-}
-
-int		ft_printf(const char *format, ...)
-{
+	ft_putstr("test");
 	t_conv	conv;
 
 	while (*format)
@@ -45,16 +31,9 @@ int		ft_printf(const char *format, ...)
 			format++;
 			if (*format != '%')
 			{
-				zero_conv(&conv);
-				while (!conv.letter)
-				{
-					//TODO: BUILD CONV HERE, BREAK INTO ANOTHER FUNCTION
-					if (is_format_char(*format))
-						conv.letter = *format;
-					format++;
-				}
-				//TODO: HANDLE FORMAT STUFF HERE
-				printf("\nconversion char: %c\n", conv.letter);
+				build_conv(&format, &conv);
+				//TODO: PRINT FROM CONV HERE
+				print_conv(&conv);
 			}
 		}
 		write(1, format, 1);

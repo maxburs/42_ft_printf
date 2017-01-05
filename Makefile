@@ -2,7 +2,8 @@ NAME = libftprintf.a
 
 SRCS = \
 	ft_printf.c\
-	conv.c
+	conv.c\
+	build_conv.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -11,7 +12,8 @@ CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJS) ./libft/libft.a
-	ar rc $@ $^
+	cp ./libft/libft.a $@
+	ar -rc $@ $(OBJS)
 	ranlib $@
 
 %.o: %.c

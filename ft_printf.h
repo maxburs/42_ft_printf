@@ -13,24 +13,26 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# define HASH_FLAG 0x01;
-# define ZERO_FLAG 0x02;
-# define MINUS_FLAG 0x03;
-# define PLUS_FLAG 0x04;
+# define HASH_FLAG 0x01
+# define ZERO_FLAG 0x02
+# define MINUS_FLAG 0x04
+# define PLUS_FLAG 0x10
 
-# define HH_LENGTH 1;
-# define H_LENGTH 2;
-# define L_LENGTH 3;
-# define LL_LENGTH 4;
-# define J_LENGTH 5;
-# define ET_LENGTH 6;
-# define Z_LENGTH 7;
+# define HH_LENGTH 1
+# define H_LENGTH 2
+# define L_LENGTH 3
+# define LL_LENGTH 4
+# define J_LENGTH 5
+# define ET_LENGTH 6
+# define Z_LENGTH 7
 
 typedef	struct	s_conv
 {
 	char			letter;
 	unsigned int	flags;
 	unsigned int	length;
+	unsigned int	min_width;
+	unsigned int	precision;
 }				t_conv;
 
 /*
@@ -42,5 +44,11 @@ int				ft_printf(const char *format, ...);
 ** conv.c
 */
 void			zero_conv(t_conv *conv);
+void			print_conv(t_conv *conv);
+
+/*
+** build_conv.c
+*/
+void			build_conv(const char **format, t_conv *conv);
 
 #endif
