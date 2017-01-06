@@ -23,6 +23,8 @@ int				ft_printf(const char *format, ...)
 {
 	ft_putstr("test");
 	t_conv	conv;
+	va_list		ap;
+	va_start(ap, format);
 
 	while (*format)
 	{
@@ -41,8 +43,6 @@ int				ft_printf(const char *format, ...)
 	}
 
 	/*
-	va_list		ap;
-	va_start(ap, format);
 	while (*format)
 	{
 		if (*format == 's')
@@ -55,7 +55,8 @@ int				ft_printf(const char *format, ...)
 		}
 		format++;
 	}
-	va_end(ap);
 	*/
+
+	va_end(ap);
 	return (0);
 }

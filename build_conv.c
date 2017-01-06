@@ -27,7 +27,6 @@ static const int flag_values[] = {
 static const char *length_values_1 = "__hl_jz";
 static const char *length_values_2 = "_h__l";
 
-
 static unsigned int		match_flags(char c)
 {
 	int		match;
@@ -56,6 +55,20 @@ static unsigned int		match_length(char c, unsigned int current_len)
 	return (match);
 }
 
+static unsigned int		match_num(const char **format)
+{
+	unsigned int result;
+
+	result = 0;
+	while (ft_isdigit(**format))
+	{
+		result = 10 * result + **format - '0';
+		(*format)++;
+	}
+	(*format)--;
+	return (result);
+}
+
 void					build_conv(const char **format, t_conv *conv)
 {
 	int		match;
@@ -75,6 +88,15 @@ void					build_conv(const char **format, t_conv *conv)
 		else if ((match = match_length(**format, conv->length)))
 		{
 			conv->length = match;
+		}
+		else if (**format == '.')
+		{
+			(*format)++;
+			conv->precision = match_num(format);
+		}
+		else if (ft_isdigit(**format))
+		{
+			conv->min_width = match_num(format);
 		}
 		(*format)++;
 	}
