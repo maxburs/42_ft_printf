@@ -3,7 +3,8 @@ NAME = libftprintf.a
 SRCS = \
 	ft_printf.c\
 	conv.c\
-	build_conv.c
+	build_conv.c\
+	print_arg.c
 
 OBJS = $(SRCS:.c=.o)
 

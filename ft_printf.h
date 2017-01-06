@@ -50,4 +50,10 @@ void			print_conv(t_conv *conv);
 */
 void			build_conv(const char **format, t_conv *conv);
 
+#include <stdarg.h>
+/*
+** print_arg.c
+*/
+void			print_arg(t_conv *conv, va_list *ap);
+
 #endif

@@ -21,7 +21,6 @@
 
 int				ft_printf(const char *format, ...)
 {
-	ft_putstr("test");
 	t_conv	conv;
 	va_list		ap;
 	va_start(ap, format);
@@ -35,7 +34,8 @@ int				ft_printf(const char *format, ...)
 			{
 				build_conv(&format, &conv);
 				//TODO: PRINT FROM CONV HERE
-				print_conv(&conv);
+				//print_conv(&conv);
+				print_arg(&conv, &ap);
 			}
 		}
 		write(1, format, 1);
