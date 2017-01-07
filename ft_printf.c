@@ -38,8 +38,10 @@ int				ft_printf(const char *format, ...)
 				print_arg(&conv, &ap);
 			}
 		}
-		write(1, format, 1);
-		format++;
+		else {
+			write(1, format, 1);
+			format++;
+		}
 	}
 
 	/*

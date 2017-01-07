@@ -47,8 +47,8 @@ void			print_arg(t_conv *conv, va_list *ap)
 {
 	char *result;
 
-	//print_conv(conv);
+	print_conv(conv);
 
 	result = pre_format(conv, ap);
-	//ft_putstr(result);
+	ft_putstr(result);
 }
