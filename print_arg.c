@@ -21,6 +21,8 @@ static char		*handle_int(t_conv *conv, va_list *ap)
 	int		result;
 
 	result = (int)va_arg(*ap, int);
+	conv->letter++;
+	/* WHY DOESNT THIS SEEM TO DO ANYTHING KAYNE??
 	if (conv->letter == 'd' || conv->letter == 'i')
 	{
 		if (conv->length == HH_LENGTH)
@@ -28,6 +30,7 @@ static char		*handle_int(t_conv *conv, va_list *ap)
 		else if (conv->length == H_LENGTH)
 			result = (int)(short)result;
 	}
+	*/
 	return (ft_itoa(result));
 }
 
