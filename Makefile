@@ -10,6 +10,10 @@ OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror
 
+DEBUG_FLAGS = -g
+
+DEBUG =
+
 all: $(NAME)
 
 $(NAME): $(OBJS) ./libft/libft.a
@@ -20,8 +24,12 @@ $(NAME): $(OBJS) ./libft/libft.a
 %.o: %.c
 	gcc $(CFLAGS) -c -I . -I ./libft -o $@ $<
 
-./libft/libft.a: ./libft/*.c
-	cd libft && $(MAKE)
+./libft/libft.a: ./libft/*/*.c
+	cd libft && $(MAKE) $(DEBUG)
+
+debug: DEBUG += debug
+debug: CFLAGS += $(DEBUG_FLAGS)
+debug: all
 
 clean:
 	rm -f $(OBJS)
