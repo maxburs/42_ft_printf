@@ -10,21 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdarg.h>
-#include <libft.h>
-#include <string.h>
-#include <stdbool.h>
 #include <unistd.h>
 #include <ft_printf.h>
 
-
 int				ft_printf(const char *format, ...)
 {
-	t_conv	conv;
+	t_conv		conv;
 	va_list		ap;
-	va_start(ap, format);
 
+	va_start(ap, format);
 	while (*format)
 	{
 		if (*format == '%')
@@ -33,32 +28,15 @@ int				ft_printf(const char *format, ...)
 			if (*format != '%')
 			{
 				build_conv(&format, &conv);
-				//TODO: PRINT FROM CONV HERE
-				//print_conv(&conv);
 				print_arg(&conv, &ap);
 			}
 		}
-		else {
+		else
+		{
 			write(1, format, 1);
 			format++;
 		}
 	}
-
-	/*
-	while (*format)
-	{
-		if (*format == 's')
-		{
-			printf("string: %s\n", va_arg(ap, char *));
-		}
-		else if (*format == 'd')
-		{
-			printf("int: %d\n", va_arg(ap, int));
-		}
-		format++;
-	}
-	*/
-
 	va_end(ap);
 	return (0);
 }

@@ -1,10 +1,11 @@
 NAME = libftprintf.a
 
 SRCS = \
-	ft_printf.c\
-	conv.c\
-	build_conv.c\
-	print_arg.c
+	ft_printf.c \
+	conv.c \
+	build_conv.c \
+	print_arg.c \
+	handle_int.c
 
 OBJS = $(SRCS:.c=.o)
 

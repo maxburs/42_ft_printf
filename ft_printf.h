@@ -57,4 +57,10 @@ void			build_conv(const char **format, t_conv *conv);
 */
 void			print_arg(t_conv *conv, va_list *ap);
 
+/*
+** handle_int.c
+*/
+
+ 	char			*handle_int(t_conv *conv, va_list *ap);
+
 #endif
