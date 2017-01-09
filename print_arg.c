@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 /* WHY DOESNT THIS SEEM TO DO ANYTHING KAYNE??
 	if (conv->letter == 'd' || conv->letter == 'i')
@@ -27,25 +28,49 @@
 	}
 	*/
 
-static char		*handle_int(t_conv *conv, va_list *ap)
+static uintmax_t	get_num(t_conv *conv, va_list *ap)
 {
-	unsigned long long int		result;
-	_Bool						neg;
-	char						*str;
-
-	if (conv->length <= 3)
+	if (conv->length == L_LENGTH)
 	{
-		result = (int)va_arg(*ap, int);
+		return ((long)va_arg(*ap, long int));
 	}
-	
-	if ((conv->letter == 'd' || conv->letter == 'i')
-		&& (signed long long int)result < 0)
+	else if (conv->length == LL_LENGTH)
 	{
-		neg = true;
-		result = ft_absolute((signed long long int)result);
+		return ((long)va_arg(*ap, long long int));
+	}
+	else if (conv->length == 'j')
+	{
+		return (uintmax_t)va_arg(*ap, int);
+	}
+	else if (conv->letter == 'd' || conv->letter == 'i')
+	{
+		return ((int)va_arg(*ap, int));
 	}
 	else
-		neg = false;
+	{
+		return ((unsigned int)va_arg(*ap, unsigned int));
+	}
+}
+
+static uintmax_t	handle_singed(t_conv *conv, uintmax_t num)
+{
+	if ((conv->letter == 'd' || conv->letter == 'i')
+		&& (intmax_t)num < 0)
+	{
+		conv->flags = conv->flags | IS_NEG;
+		return (ft_absolute((intmax_t)num));
+	}
+	return (num);
+}
+
+static char			*handle_num(t_conv *conv, va_list *ap)
+{
+	unsigned long long int		result;
+	char						*str;
+
+	
+	result = get_num(conv, ap);
+	result = handle_singed(conv, result);
 
 	if (conv->letter == 'd' || conv->letter == 'i' || conv->letter == 'u')
 		str = (ft_itoa_base(result, 10, false));
@@ -56,13 +81,13 @@ static char		*handle_int(t_conv *conv, va_list *ap)
 	else if (conv->letter == 'X')
 		str = (ft_itoa_base(result, 16, true));
 
-	if (neg)
+	if (conv->flags & IS_NEG)
 		return (ft_strjoin("-", str)); //TODO: FIX THIS! MEMORY LEAK HERE
 	else
 		return (str);
 }
 
-static char		*pre_format(t_conv *conv, va_list *ap)
+static char			*pre_format(t_conv *conv, va_list *ap)
 {
 	if (conv->letter == 's')
 	{
@@ -70,7 +95,7 @@ static char		*pre_format(t_conv *conv, va_list *ap)
 	}
 	else if (ft_strchr("diuoxX", conv->letter))
 	{
-		return (handle_int(conv, ap));
+		return (handle_num(conv, ap));
 	}
 	else
 		return (NULL);

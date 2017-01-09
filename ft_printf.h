@@ -17,6 +17,7 @@
 # define ZERO_FLAG 0x02
 # define MINUS_FLAG 0x04
 # define PLUS_FLAG 0x10
+# define IS_NEG 0X20
 
 # define HH_LENGTH 1
 # define H_LENGTH 2
