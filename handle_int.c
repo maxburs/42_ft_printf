@@ -20,17 +20,17 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 {
 	if (conv->length == L_LENGTH)
 	{
-		return ((long)va_arg(*ap, long int));
+		return ((long int)va_arg(*ap, long int));
 	}
 	else if (conv->length == LL_LENGTH)
 	{
-		return ((long)va_arg(*ap, long long int));
+		return ((long long int)va_arg(*ap, long long int));
 	}
 	else if (conv->length == 'j')
 	{
 		return (uintmax_t)va_arg(*ap, int);
 	}
-	else if (conv->letter == 'd' || conv->letter == 'i')
+	else if (conv->letter == 'd' || conv->letter == 'D' || conv->letter == 'i')
 	{
 		return ((int)va_arg(*ap, int));
 	}
@@ -59,7 +59,8 @@ static char			*num_to_string(t_conv *conv, uintmax_t num)
 {
 	char	*str;
 
-	if (conv->letter == 'd' || conv->letter == 'i' || conv->letter == 'u')
+	if (conv->letter == 'd' || conv->letter == 'D'
+			|| conv->letter == 'i' || conv->letter == 'u')
 		str = ft_itoa_base(num, 10, false);
 	else if (conv->letter == 'o')
 		str = ft_itoa_base(num, 8, false);
@@ -75,7 +76,6 @@ static char			*num_to_string(t_conv *conv, uintmax_t num)
 char				*handle_int(t_conv *conv, va_list *ap)
 {
 	uintmax_t	result;
-
 	result = get_num(conv, ap);
 	result = handle_singed(conv, result);
 	return (num_to_string(conv, result));

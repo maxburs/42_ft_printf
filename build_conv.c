@@ -14,7 +14,7 @@
 #include <ft_printf.h>
 #include <stdbool.h>
 
-static const char *g_format_characters = "sSpdDioOuUxXcC";
+static const char *g_format_characters = "sSpdDioOuUxXcCfFeEgGaAn";
 
 static const char *g_flag_keys = "#0-+";
 static const int g_flag_values[] = {
@@ -97,6 +97,10 @@ void					build_conv(const char **format, t_conv *conv)
 		else if (ft_isdigit(**format))
 		{
 			conv->min_width = match_num(format);
+		}
+		else if (!**format)
+		{
+			break;
 		}
 		(*format)++;
 	}

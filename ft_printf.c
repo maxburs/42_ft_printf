@@ -13,6 +13,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <ft_printf.h>
+#include <libft.h>
 
 int				ft_printf(const char *format, ...)
 {
@@ -28,7 +29,10 @@ int				ft_printf(const char *format, ...)
 			if (*format != '%')
 			{
 				build_conv(&format, &conv);
-				print_arg(&conv, &ap);
+				if (!conv.letter)
+					ft_putstr_fd("BUILD CONV ERROR", 0);
+				else
+					print_arg(&conv, &ap);
 			}
 		}
 		else
