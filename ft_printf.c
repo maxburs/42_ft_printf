@@ -39,12 +39,10 @@ static char		*handle_conv(const char **format, t_conv *conv, va_list *ap)
 	return (result);
 }
 
-static void		print_arg(char *str, t_conv *conv)
+static void		print_arg(char *str)
 {
 	if (!str)
 		return ;
-	if (conv->flags & IS_NEG)
-		ft_putchar('-');
 	ft_putstr(str);
 	free(str);
 }
@@ -62,7 +60,7 @@ int				ft_printf(const char *format, ...)
 			format++;
 			if (*format != '%')
 			{
-				print_arg(handle_conv(&format, &conv, &ap), &conv);
+				print_arg(handle_conv(&format, &conv, &ap));
 			}
 		}
 		else
