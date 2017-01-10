@@ -39,7 +39,6 @@ static char		*handle_conv(const char **format, t_conv *conv, va_list *ap)
 	return (result);
 }
 
-
 static void		print_arg(char *str, t_conv *conv)
 {
 	if (!str)

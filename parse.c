@@ -15,9 +15,8 @@
 #include <libft.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
-char			*handle_char(va_list *ap)
+char			*parse_char(va_list *ap)
 {
 	char	*str;
 
@@ -28,11 +27,16 @@ char			*handle_char(va_list *ap)
 	return (str);
 }
 
+char			*parse_string(va_list *ap)
+{
+	return (ft_strdup((char*)va_arg(*ap, char*)));
+}
+
 char			*parse(t_conv *conv, va_list *ap)
 {
-	if (conv->letter == 's')
+	if (conv->letter == 's' || conv->letter == 'S');
 	{
-		return (ft_strdup((char*)va_arg(*ap, char*)));
+		return (parse_string(ap));
 	}
 	else if (ft_strchr("dDiuUoxX", conv->letter))
 	{
@@ -40,7 +44,7 @@ char			*parse(t_conv *conv, va_list *ap)
 	}
 	else if (conv->letter == 'c' || conv->letter == 'C')
 	{
-		return (handle_char(ap));
+		return (parse_char(ap));
 	}
 	else
 		return (NULL);

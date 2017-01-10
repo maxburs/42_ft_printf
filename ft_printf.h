@@ -26,8 +26,8 @@
 # define J_LENGTH 5
 # define Z_LENGTH 6
 
-#include <stdarg.h>
-#include <string.h>
+# include <stdarg.h>
+# include <string.h>
 
 typedef	struct	s_conv
 {

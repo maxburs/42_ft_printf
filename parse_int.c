@@ -79,6 +79,7 @@ static char			*num_to_string(t_conv *conv, uintmax_t num)
 char				*parse_int(t_conv *conv, va_list *ap)
 {
 	uintmax_t	result;
+
 	result = get_num(conv, ap);
 	result = handle_singed(conv, result);
 	return (num_to_string(conv, result));

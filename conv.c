@@ -109,7 +109,7 @@ void					build_conv(const char **format, t_conv *conv)
 		}
 		else if (!**format)
 		{
-			break;
+			break ;
 		}
 		(*format)++;
 	}
