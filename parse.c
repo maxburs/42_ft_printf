@@ -34,7 +34,7 @@ char			*parse_string(va_list *ap)
 
 char			*parse(t_conv *conv, va_list *ap)
 {
-	if (conv->letter == 's' || conv->letter == 'S');
+	if (conv->letter == 's' || conv->letter == 'S')
 	{
 		return (parse_string(ap));
 	}
