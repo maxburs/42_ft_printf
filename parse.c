@@ -28,7 +28,7 @@ char			*handle_char(va_list *ap)
 	return (str);
 }
 
-static char		*pre_format(t_conv *conv, va_list *ap)
+char			*parse(t_conv *conv, va_list *ap)
 {
 	if (conv->letter == 's')
 	{
@@ -36,7 +36,7 @@ static char		*pre_format(t_conv *conv, va_list *ap)
 	}
 	else if (ft_strchr("dDiuUoxX", conv->letter))
 	{
-		return (handle_int(conv, ap));
+		return (parse_int(conv, ap));
 	}
 	else if (conv->letter == 'c' || conv->letter == 'C')
 	{
@@ -44,20 +44,4 @@ static char		*pre_format(t_conv *conv, va_list *ap)
 	}
 	else
 		return (NULL);
-}
-
-void			print_arg(t_conv *conv, va_list *ap)
-{
-	char *result;
-
-	result = pre_format(conv, ap);
-	if (result == NULL)
-	{
-		ft_putstr_fd("PRE FORMAT ERROR", 0);
-	}
-	else
-	{
-		ft_putstr(result);
-		free(result);
-	}
 }

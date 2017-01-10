@@ -18,6 +18,14 @@
 
 static uintmax_t	get_num(t_conv *conv, va_list *ap)
 {
+	if (conv->length == HH_LENGTH)
+	{
+		return ((char)va_arg(*ap, int));
+	}
+	if (conv->length == H_LENGTH)
+	{
+		return ((short)va_arg(*ap, int));
+	}
 	if (conv->length == L_LENGTH)
 	{
 		return ((long int)va_arg(*ap, long int));
@@ -26,21 +34,17 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 	{
 		return ((long long int)va_arg(*ap, long long int));
 	}
-	else if (conv->length == 'j')
+	else if (conv->length == J_LENGTH)
 	{
-		return (uintmax_t)va_arg(*ap, int);
+		return (uintmax_t)va_arg(*ap, uintmax_t);
 	}
-	else if (conv->letter == 'd' || conv->letter == 'D' || conv->letter == 'i')
-	{
-		return ((int)va_arg(*ap, int));
-	}
-	else if (conv->letter == 'z')
+	else if (conv->length == Z_LENGTH)
 	{
 		return ((size_t)va_arg(*ap, size_t));
 	}
 	else
 	{
-		return ((unsigned int)va_arg(*ap, unsigned int));
+		return ((int)va_arg(*ap, int));
 	}
 }
 
@@ -59,8 +63,7 @@ static char			*num_to_string(t_conv *conv, uintmax_t num)
 {
 	char	*str;
 
-	if (conv->letter == 'd' || conv->letter == 'D'
-			|| conv->letter == 'i' || conv->letter == 'u')
+	if (ft_strchri("dDiuU", conv->letter) != -1)
 		str = ft_itoa_base(num, 10, false);
 	else if (conv->letter == 'o')
 		str = ft_itoa_base(num, 8, false);
@@ -73,7 +76,7 @@ static char			*num_to_string(t_conv *conv, uintmax_t num)
 	return (str);
 }
 
-char				*handle_int(t_conv *conv, va_list *ap)
+char				*parse_int(t_conv *conv, va_list *ap)
 {
 	uintmax_t	result;
 	result = get_num(conv, ap);

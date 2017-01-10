@@ -14,6 +14,41 @@
 #include <unistd.h>
 #include <ft_printf.h>
 #include <libft.h>
+#include <stdlib.h>
+
+static char		*handle_conv(const char **format, t_conv *conv, va_list *ap)
+{
+	char	*result;
+
+	build_conv(format, conv);
+	if (!conv->letter)
+	{
+		ft_putstr_fd("BUILD CONV ERROR", 0);
+		return (NULL);
+	}
+	if (!(result = parse(conv, ap)))
+	{
+		ft_putstr_fd("PARSE ERROR", 0);
+		return (NULL);
+	}
+	if (!(result = format_str(conv, result)))
+	{
+		ft_putstr_fd("FORMAT ERROR", 0);
+		return (NULL);
+	}
+	return (result);
+}
+
+
+static void		print_arg(char *str, t_conv *conv)
+{
+	if (!str)
+		return ;
+	if (conv->flags & IS_NEG)
+		ft_putchar('-');
+	ft_putstr(str);
+	free(str);
+}
 
 int				ft_printf(const char *format, ...)
 {
@@ -28,11 +63,7 @@ int				ft_printf(const char *format, ...)
 			format++;
 			if (*format != '%')
 			{
-				build_conv(&format, &conv);
-				if (!conv.letter)
-					ft_putstr_fd("BUILD CONV ERROR", 0);
-				else
-					print_arg(&conv, &ap);
+				print_arg(handle_conv(&format, &conv, &ap), &conv);
 			}
 		}
 		else

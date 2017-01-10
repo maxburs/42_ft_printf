@@ -26,13 +26,16 @@
 # define J_LENGTH 5
 # define Z_LENGTH 6
 
+#include <stdarg.h>
+#include <string.h>
+
 typedef	struct	s_conv
 {
 	char			letter;
 	unsigned int	flags;
 	unsigned int	length;
-	unsigned int	min_width;
-	unsigned int	precision;
+	size_t			min_width;
+	size_t			precision;
 }				t_conv;
 
 /*
@@ -43,24 +46,26 @@ int				ft_printf(const char *format, ...);
 /*
 ** conv.c
 */
-void			zero_conv(t_conv *conv);
-void			print_conv(t_conv *conv);
-
-/*
-** build_conv.c
-*/
 void			build_conv(const char **format, t_conv *conv);
 
-#include <stdarg.h>
 /*
-** print_arg.c
+** parse.c
 */
-void			print_arg(t_conv *conv, va_list *ap);
+char			*parse(t_conv *conv, va_list *ap);
 
 /*
-** handle_int.c
+** parse_int.c
 */
+char			*parse_int(t_conv *conv, va_list *ap);
 
-char			*handle_int(t_conv *conv, va_list *ap);
+/*
+** format.c
+*/
+char			*format_str(t_conv *conv, char *str);
+
+/*
+** debug.c
+*/
+void			print_conv(t_conv *conv);
 
 #endif
