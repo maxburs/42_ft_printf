@@ -16,12 +16,13 @@
 
 static const char *g_format_characters = "sSpdDioOuUxXcCfFeEgGaAn";
 
-static const char *g_flag_keys = "#0-+";
+static const char *g_flag_keys = "#0-+ ";
 static const int g_flag_values[] = {
 	HASH_FLAG,
 	ZERO_FLAG,
 	MINUS_FLAG,
-	PLUS_FLAG
+	PLUS_FLAG,
+	SPACE_FLAG
 };
 
 static const char *g_length_values_1 = "__hl_jz";

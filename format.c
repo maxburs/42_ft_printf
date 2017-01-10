@@ -67,7 +67,6 @@ static void		format_min_width(t_conv *conv, char **str)
 	length = ft_strlen(*str);
 	if (conv->min_width > length)
 	{
-		//print_conv(conv);
 		swap = ft_strpad(*str, conv->min_width - length,  is_zero_fill(conv) ? '0' : ' ', (conv->flags & MINUS_FLAG));
 		free(*str);
 		*str = swap;
@@ -81,6 +80,18 @@ char			*format_str(t_conv *conv, char *str)
 	if (conv->flags & IS_NEG)
 	{
 		swap = ft_strjoin("-", str);
+		free(str);
+		str = swap;
+	}
+	else if (conv->flags & PLUS_FLAG)
+	{
+		swap = ft_strjoin("+", str);
+		free(str);
+		str = swap;
+	}
+	else if (conv->flags & SPACE_FLAG)
+	{
+		swap = ft_strjoin(" ", str);
 		free(str);
 		str = swap;
 	}
