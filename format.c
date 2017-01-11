@@ -73,27 +73,63 @@ static void		format_min_width(t_conv *conv, char **str)
 	}
 }
 
-char			*format_str(t_conv *conv, char *str)
+static char		find_sign(t_conv *conv)
 {
-	char	*swap;
-	format_precision(conv, &str);
 	if (conv->flags & IS_NEG)
 	{
-		swap = ft_strjoin("-", str);
-		free(str);
-		str = swap;
+		return ('-');
 	}
 	else if (conv->flags & PLUS_FLAG)
 	{
-		swap = ft_strjoin("+", str);
-		free(str);
-		str = swap;
+		return ('+');
 	}
 	else if (conv->flags & SPACE_FLAG)
 	{
-		swap = ft_strjoin(" ", str);
-		free(str);
-		str = swap;
+		return (' ');
+	}
+	else
+	{
+		return ('\0');
+	}
+
+}
+static void		add_sign(t_conv *conv, char **str)
+{
+	char	*swap;
+	char	sign;
+
+	if (!(sign = find_sign(conv)))
+		return ;
+	if ((*str)[0] == '0')
+	{
+		(*str)[0] = sign;
+	}
+	else
+	{
+		if (!(swap = (char*)malloc(sizeof(char) * (ft_strlen(*str) + 2))))
+		{
+			ft_strdel(str);
+			return ;
+		}
+		ft_strcpy(swap + 1, *str);
+		swap[0] = sign;
+		free(*str);
+		*str = swap;
+	}
+}
+
+char			*format_str(t_conv *conv, char *str)
+{
+	format_precision(conv, &str);
+	if (conv->min_width > ft_strlen(str) && is_zero_fill(conv))
+	{
+		format_min_width(conv, &str);
+		add_sign(conv, &str);
+	}
+	else
+	{
+		add_sign(conv, &str);
+		format_min_width(conv, &str);
 	}
 	format_min_width(conv, &str);
 	return (str);
