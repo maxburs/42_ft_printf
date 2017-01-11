@@ -70,5 +70,6 @@ int				ft_printf(const char *format, ...)
 		}
 	}
 	va_end(ap);
+	ft_putstr("---\n");
 	return (0);
 }

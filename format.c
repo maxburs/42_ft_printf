@@ -96,14 +96,14 @@ static char		find_sign(t_conv *conv)
 	}
 }
 
-static void		add_sign(t_conv *conv, char **str)
+static void		add_sign(t_conv *conv, char **str, _Bool inside_ok)
 {
 	char	*swap;
 	char	sign;
 
 	if (!(sign = find_sign(conv)))
 		return ;
-	if ((*str)[0] == '0')
+	if (inside_ok && (*str)[0] == '0')
 	{
 		(*str)[0] = sign;
 	}
@@ -127,11 +127,11 @@ char			*format_str(t_conv *conv, char *str)
 	if (conv->min_width > ft_strlen(str) && is_zero_fill(conv))
 	{
 		format_min_width(conv, &str);
-		add_sign(conv, &str);
+		add_sign(conv, &str, true);
 	}
 	else
 	{
-		add_sign(conv, &str);
+		add_sign(conv, &str, false);
 		format_min_width(conv, &str);
 	}
 	format_min_width(conv, &str);

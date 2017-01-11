@@ -20,19 +20,19 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 {
 	if (conv->length == HH_LENGTH)
 	{
-		return ((char)va_arg(*ap, int));
+		return ((intmax_t)(char)va_arg(*ap, int));
 	}
 	if (conv->length == H_LENGTH)
 	{
-		return ((short)va_arg(*ap, int));
+		return ((intmax_t)(short)va_arg(*ap, int));
 	}
 	if (conv->length == L_LENGTH)
 	{
-		return ((long int)va_arg(*ap, long int));
+		return ((intmax_t)(long int)va_arg(*ap, long int));
 	}
 	else if (conv->length == LL_LENGTH)
 	{
-		return ((long long int)va_arg(*ap, long long int));
+		return ((intmax_t)(long long int)va_arg(*ap, long long int));
 	}
 	else if (conv->length == J_LENGTH)
 	{
@@ -44,22 +44,22 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 	}
 	else if (conv->letter == 'D' || conv->letter == 'U')
 	{
-		return ((long int)va_arg(*ap, long int));
+		return ((intmax_t)(long int)va_arg(*ap, long int));
 	}
-	else if (ft_strchri("ouxX", conv->letter))
+	else if (ft_strchri("oOuxX", conv->letter) != -1)
 	{
 		return ((unsigned int)va_arg(*ap, int));
 	}
 	else
 	{
-		return ((int)va_arg(*ap, int));
+		return ((intmax_t)(int)va_arg(*ap, int));
 	}
 }
 
 static uintmax_t	handle_singed(t_conv *conv, uintmax_t num)
 {
 	if ((conv->letter == 'd' || conv->letter == 'D' || conv->letter == 'i')
-		&& (intmax_t)num < 0)
+		&& ((intmax_t)num < 0))
 	{
 		conv->flags = conv->flags | IS_NEG;
 		return (ft_absolute((intmax_t)num));
@@ -73,7 +73,7 @@ char				*num_to_string(t_conv *conv, uintmax_t num)
 
 	if (ft_strchri("dDiuU", conv->letter) != -1)
 		str = ft_itoa_base(num, 10, false);
-	else if (conv->letter == 'o')
+	else if (conv->letter == 'o' || conv->letter == 'O')
 		str = ft_itoa_base(num, 8, false);
 	else if (conv->letter == 'x')
 		str = ft_itoa_base(num, 16, false);

@@ -38,7 +38,7 @@ char			*parse(t_conv *conv, va_list *ap)
 	{
 		return (parse_string(ap));
 	}
-	else if (ft_strchr("dDiuUoxX", conv->letter))
+	else if (ft_strchr("dDiuUoOxX", conv->letter))
 	{
 		return (parse_int(conv, ap));
 	}
