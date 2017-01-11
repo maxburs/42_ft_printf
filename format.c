@@ -56,7 +56,9 @@ static void		format_precision(t_conv *conv, char **str)
 
 static _Bool	is_zero_fill(t_conv *conv)
 {
-	return ((!(conv->flags & MINUS_FLAG)) && (conv->flags & ZERO_FLAG) && (conv->precision == 0));
+	return ((!(conv->flags & MINUS_FLAG)) \
+				&& (conv->flags & ZERO_FLAG) \
+				&& (conv->precision == 0));
 }
 
 static void		format_min_width(t_conv *conv, char **str)
@@ -67,7 +69,8 @@ static void		format_min_width(t_conv *conv, char **str)
 	length = ft_strlen(*str);
 	if (conv->min_width > length)
 	{
-		swap = ft_strpad(*str, conv->min_width - length,  is_zero_fill(conv) ? '0' : ' ', (conv->flags & MINUS_FLAG));
+		swap = ft_strpad(*str, conv->min_width - length, \
+				is_zero_fill(conv) ? '0' : ' ', (conv->flags & MINUS_FLAG));
 		free(*str);
 		*str = swap;
 	}
@@ -91,8 +94,8 @@ static char		find_sign(t_conv *conv)
 	{
 		return ('\0');
 	}
-
 }
+
 static void		add_sign(t_conv *conv, char **str)
 {
 	char	*swap;
