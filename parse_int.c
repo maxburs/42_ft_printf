@@ -42,6 +42,10 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 	{
 		return ((size_t)va_arg(*ap, size_t));
 	}
+	else if (conv->letter == 'D' || conv->letter == 'U')
+	{
+		return ((long int)va_arg(*ap, long int));
+	}
 	else
 	{
 		return ((int)va_arg(*ap, int));
@@ -50,7 +54,7 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 
 static uintmax_t	handle_singed(t_conv *conv, uintmax_t num)
 {
-	if ((conv->letter == 'd' || conv->letter == 'i')
+	if ((conv->letter == 'd' || conv->letter == 'D' || conv->letter == 'i')
 		&& (intmax_t)num < 0)
 	{
 		conv->flags = conv->flags | IS_NEG;
