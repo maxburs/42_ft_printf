@@ -29,6 +29,7 @@
 
 # include <stdarg.h>
 # include <string.h>
+# include <stdint.h>
 
 typedef	struct	s_conv
 {
@@ -48,6 +49,7 @@ int				ft_printf(const char *format, ...);
 ** conv.c
 */
 void			build_conv(const char **format, t_conv *conv);
+void			zero_conv(t_conv *conv);
 
 /*
 ** parse.c
@@ -58,6 +60,7 @@ char			*parse(t_conv *conv, va_list *ap);
 ** parse_int.c
 */
 char			*parse_int(t_conv *conv, va_list *ap);
+char			*num_to_string(t_conv *conv, uintmax_t num);
 
 /*
 ** format.c
@@ -68,5 +71,10 @@ char			*format_str(t_conv *conv, char *str);
 ** debug.c
 */
 void			print_conv(t_conv *conv);
+
+/*
+** parse_ptr.c
+*/
+char			*parse_ptr(va_list *ap);
 
 #endif

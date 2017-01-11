@@ -46,6 +46,10 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 	{
 		return ((long int)va_arg(*ap, long int));
 	}
+	else if (ft_strchri("ouxX", conv->letter))
+	{
+		return ((unsigned int)va_arg(*ap, int));
+	}
 	else
 	{
 		return ((int)va_arg(*ap, int));
@@ -63,7 +67,7 @@ static uintmax_t	handle_singed(t_conv *conv, uintmax_t num)
 	return (num);
 }
 
-static char			*num_to_string(t_conv *conv, uintmax_t num)
+char				*num_to_string(t_conv *conv, uintmax_t num)
 {
 	char	*str;
 

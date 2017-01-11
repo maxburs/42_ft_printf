@@ -28,7 +28,7 @@ static const int g_flag_values[] = {
 static const char *g_length_values_1 = "__hl_jz";
 static const char *g_length_values_2 = "_h__l";
 
-static void				zero_conv(t_conv *conv)
+void					zero_conv(t_conv *conv)
 {
 	conv->letter = '\0';
 	conv->flags = 0;

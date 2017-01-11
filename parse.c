@@ -46,6 +46,10 @@ char			*parse(t_conv *conv, va_list *ap)
 	{
 		return (parse_char(ap));
 	}
+	else if (conv->letter == 'p')
+	{
+		return (parse_ptr(ap));
+	}
 	else
 		return (NULL);
 }
