@@ -72,9 +72,4 @@ char			*format_str(t_conv *conv, char *str);
 */
 void			print_conv(t_conv *conv);
 
-/*
-** parse_ptr.c
-*/
-char			*parse_ptr(va_list *ap);
-
 #endif

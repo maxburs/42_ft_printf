@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_int.c                                       :+:      :+:    :+:   */
+/*   parse_int.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mburson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/08 22:11:10 by mburson           #+#    #+#             */
-/*   Updated: 2017/01/08 22:11:12 by mburson          ###   ########.fr       */
+/*   Created: 2017/01/11 21:54:56 by mburson           #+#    #+#             */
+/*   Updated: 2017/01/11 21:54:58 by mburson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,25 @@
 #include <ft_printf.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdarg.h>
 
 static uintmax_t	get_num(t_conv *conv, va_list *ap)
 {
 	if (conv->length == HH_LENGTH)
 	{
-		return ((intmax_t)(char)va_arg(*ap, int));
+		return ((intmax_t)((char)va_arg(*ap, int)));
 	}
-	if (conv->length == H_LENGTH)
+	else if (conv->length == H_LENGTH)
 	{
-		return ((intmax_t)(short)va_arg(*ap, int));
+		return ((intmax_t)((short)va_arg(*ap, int)));
 	}
-	if (conv->length == L_LENGTH)
+	else if (conv->length == L_LENGTH)
 	{
-		return ((intmax_t)(long int)va_arg(*ap, long int));
+		return ((intmax_t)((long int)va_arg(*ap, long int)));
 	}
 	else if (conv->length == LL_LENGTH)
 	{
-		return ((intmax_t)(long long int)va_arg(*ap, long long int));
+		return ((intmax_t)((long long int)va_arg(*ap, long long int)));
 	}
 	else if (conv->length == J_LENGTH)
 	{
@@ -44,15 +45,15 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 	}
 	else if (conv->letter == 'D' || conv->letter == 'U')
 	{
-		return ((intmax_t)(long int)va_arg(*ap, long int));
+		return ((intmax_t)((long int)va_arg(*ap, long int)));
 	}
-	else if (ft_strchri("oOuxX", conv->letter) != -1)
+	else if (ft_strchr("oOuxX", conv->letter))
 	{
 		return ((unsigned int)va_arg(*ap, int));
 	}
 	else
 	{
-		return ((intmax_t)(int)va_arg(*ap, int));
+		return ((intmax_t)((int)va_arg(*ap, int)));
 	}
 }
 
@@ -71,7 +72,7 @@ char				*num_to_string(t_conv *conv, uintmax_t num)
 {
 	char	*str;
 
-	if (ft_strchri("dDiuU", conv->letter) != -1)
+	if (ft_strchr("dDiuU", conv->letter))
 		str = ft_itoa_base(num, 10, false);
 	else if (conv->letter == 'o' || conv->letter == 'O')
 		str = ft_itoa_base(num, 8, false);

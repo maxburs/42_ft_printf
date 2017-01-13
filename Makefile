@@ -7,7 +7,6 @@ SRCS = \
 	parse_int.c \
 	format.c \
 	debug.c \
-	parse_ptr.c \
 
 OBJS = $(SRCS:.c=.o)
 
