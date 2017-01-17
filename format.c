@@ -40,15 +40,15 @@ static char		*ft_strpad(char *str, size_t n, char c, _Bool back)
 	return (result);
 }
 
-static void		format_precision(t_conv *conv, char **str)
+void			format_precision(size_t precision, char **str)
 {
 	size_t	length;
 	char	*swap;
 
 	length = ft_strlen(*str);
-	if (conv->precision > length)
+	if (precision > length)
 	{
-		swap = ft_strpad(*str, conv->precision - length, '0', false);
+		swap = ft_strpad(*str, precision - length, '0', false);
 		free(*str);
 		*str = swap;
 	}
@@ -121,9 +121,34 @@ static void		add_sign(t_conv *conv, char **str, _Bool inside_ok)
 	}
 }
 
+static void		handle_hash_o(t_conv *conv, char *str)
+{
+	size_t	length;
+
+	if ((conv->letter != 'o') || !(conv->flags & HASH_FLAG))
+		return ;
+	length = ft_strlen(str);
+	if (conv->precision <= length)
+		conv->precision = length + 1;
+
+}
+
+static void		handle_hash_x(t_conv *conv, char **str)
+{
+	char	*swap;
+
+	if ((conv->letter != 'x' && conv->letter != 'X') || !(conv->flags & HASH_FLAG))
+		return ;
+	swap = ft_strjoin(conv->letter == 'X' ? "0X" : "0x", *str);
+	free(*str);
+	*str = swap;
+}
+
 char			*format_str(t_conv *conv, char *str)
 {
-	format_precision(conv, &str);
+	handle_hash_o(conv, str);
+	format_precision(conv->precision, &str);
+	handle_hash_x(conv, &str);
 	if (conv->min_width > ft_strlen(str) && is_zero_fill(conv))
 	{
 		format_min_width(conv, &str);

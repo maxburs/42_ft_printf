@@ -47,7 +47,7 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 	{
 		return ((intmax_t)((long int)va_arg(*ap, long int)));
 	}
-	else if (ft_strchr("oOuxX", conv->letter))
+	else if (ft_strchr("oOuxXb", conv->letter))
 	{
 		return ((unsigned int)va_arg(*ap, int));
 	}
@@ -80,6 +80,8 @@ char				*num_to_string(t_conv *conv, uintmax_t num)
 		str = ft_itoa_base(num, 16, false);
 	else if (conv->letter == 'X')
 		str = ft_itoa_base(num, 16, true);
+	else if (conv->letter == 'b')
+		str = ft_itoa_base(num, 2, false);
 	else
 		str = NULL;
 	return (str);

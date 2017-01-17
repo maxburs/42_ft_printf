@@ -1,20 +1,34 @@
 NAME = libftprintf.a
 
 SRCS = \
-	ft_printf.c \
 	conv.c \
-	parse.c \
-	parse_int.c \
-	format.c \
 	debug.c \
+	format.c \
+	ft_printf.c \
+	inference.c \
+	$(addprefix parse/,\
+		parse.c \
+		parse_char.c \
+		parse_char_wide.c \
+		parse_int.c \
+		parse_ptr.c \
+		parse_str.c \
+		parse_str_wide.c \
+	) \
 
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror
-
-DEBUG_FLAGS = -g
-
-DEBUG =
+CFLAGS = -Wall -Wextra
+ifndef WNOERROR
+	CFLAGS += -Werror
+endif
+ifdef WNOERROR
+	MAKE_ARGS += WNOERROR=1
+endif
+ifdef DEBUG
+	CFLAGS += -g
+	MAKE_ARGS += DEBUG=1
+endif
 
 all: $(NAME)
 
@@ -26,12 +40,8 @@ $(NAME): $(OBJS) ./libft/libft.a
 %.o: %.c
 	gcc $(CFLAGS) -c -I . -I ./libft -o $@ $<
 
-./libft/libft.a: ./libft/*/*.c
-	cd libft && $(MAKE) $(DEBUG)
-
-debug: DEBUG += debug
-debug: CFLAGS += $(DEBUG_FLAGS)
-debug: all
+./libft/libft.a:
+	cd libft && $(MAKE) $(MAKE_ARGS)
 
 clean:
 	rm -f $(OBJS)
@@ -40,4 +50,4 @@ fclean: clean
 	rm -f $(NAME)
 re: fclean all
 
-.PHONY: clean fclean re
+.PHONY: clean fclean re ./libft/libft.a

@@ -16,6 +16,10 @@
 #include <libft.h>
 #include <stdlib.h>
 
+/*
+** b conversion character: print an integers bits
+*/
+
 static char		*handle_conv(const char **format, t_conv *conv, va_list *ap)
 {
 	char	*result;
@@ -26,6 +30,7 @@ static char		*handle_conv(const char **format, t_conv *conv, va_list *ap)
 		ft_putstr_fd("BUILD CONV ERROR", 0);
 		return (NULL);
 	}
+	inference(conv);
 	if (!(result = parse(conv, ap)))
 	{
 		ft_putstr_fd("PARSE ERROR", 0);
