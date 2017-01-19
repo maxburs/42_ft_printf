@@ -19,6 +19,7 @@
 # define PLUS_FLAG 0x08
 # define SPACE_FLAG 0x10
 # define IS_NEG 0x20
+# define HAS_PRECISION 0x40
 
 # define HH_LENGTH 1
 # define H_LENGTH 2

@@ -16,10 +16,10 @@
 void					print_conv(t_conv *conv)
 {
 	printf("---\n");
-	printf("   letter: %c\n", conv->letter);
-	printf("    flags: %X\n", conv->flags);
-	printf("   length: %d\n", conv->length);
-	printf("min_width: %zu\n", conv->min_width);
-	printf("precision: %zu\n", conv->precision);
+	printf("       letter: %c\n", conv->letter);
+	printf("        flags: %X\n", conv->flags);
+	printf("       length: %d\n", conv->length);
+	printf("    min_width: %zu\n", conv->min_width);
+	printf("    precision: %zu\n", conv->precision);
 	printf("---\n");
 }

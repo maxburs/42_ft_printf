@@ -20,23 +20,24 @@
 ** b conversion character: print an integers bits
 */
 
-static char		*handle_conv(const char **format, t_conv *conv, va_list *ap)
+static char		*handle_conv(const char **format, va_list *ap)
 {
 	char	*result;
+	t_conv	conv;
 
-	build_conv(format, conv);
-	if (!conv->letter)
+	build_conv(format, &conv);
+	if (!conv.letter)
 	{
 		ft_putstr_fd("BUILD CONV ERROR", 0);
 		return (NULL);
 	}
-	inference(conv);
-	if (!(result = parse(conv, ap)))
+	inference(&conv);
+	if (!(result = parse(&conv, ap)))
 	{
 		ft_putstr_fd("PARSE ERROR", 0);
 		return (NULL);
 	}
-	if (!(result = format_str(conv, result)))
+	if (!(result = format_str(&conv, result)))
 	{
 		ft_putstr_fd("FORMAT ERROR", 0);
 		return (NULL);
@@ -54,7 +55,6 @@ static void		print_arg(char *str)
 
 int				ft_printf(const char *format, ...)
 {
-	t_conv		conv;
 	va_list		ap;
 
 	va_start(ap, format);
@@ -65,7 +65,7 @@ int				ft_printf(const char *format, ...)
 			format++;
 			if (*format != '%')
 			{
-				print_arg(handle_conv(&format, &conv, &ap));
+				print_arg(handle_conv(&format, &ap));
 			}
 		}
 		else

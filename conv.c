@@ -79,6 +79,11 @@ static unsigned int		match_num(const char **format)
 	return (result);
 }
 
+/*
+** if precision is set it cannot be set lower than one
+**   this is to indicate that it was set
+*/
+
 void					build_conv(const char **format, t_conv *conv)
 {
 	int		match;
@@ -102,6 +107,7 @@ void					build_conv(const char **format, t_conv *conv)
 		else if (**format == '.')
 		{
 			(*format)++;
+			conv->flags += HAS_PRECISION;
 			conv->precision = match_num(format);
 		}
 		else if (ft_isdigit(**format))

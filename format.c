@@ -58,7 +58,7 @@ static _Bool	is_zero_fill(t_conv *conv)
 {
 	return ((!(conv->flags & MINUS_FLAG)) \
 				&& (conv->flags & ZERO_FLAG) \
-				&& (conv->precision == 0));
+				&& (!(conv->flags & HAS_PRECISION)));
 }
 
 static void		format_min_width(t_conv *conv, char **str)
@@ -130,14 +130,14 @@ static void		handle_hash_o(t_conv *conv, char *str)
 	length = ft_strlen(str);
 	if (conv->precision <= length)
 		conv->precision = length + 1;
-
 }
 
 static void		handle_hash_x(t_conv *conv, char **str)
 {
 	char	*swap;
 
-	if ((conv->letter != 'x' && conv->letter != 'X') || !(conv->flags & HASH_FLAG))
+	if ((conv->letter != 'x' && conv->letter != 'X') \
+			|| !(conv->flags & HASH_FLAG))
 		return ;
 	swap = ft_strjoin(conv->letter == 'X' ? "0X" : "0x", *str);
 	free(*str);
