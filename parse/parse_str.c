@@ -17,33 +17,38 @@
 #include <ft_printf.h>
 #include <stdbool.h>
 
-/*
-static char		*parse_char_bitwise(char c)
+static char		*parse_char_bitwise(char c, t_conv *conv)
 {
 	char	*str;
 
 	str = ft_itoa_base((unsigned char)c, 2, true);
-	format_precision(sizeof(char), str);
+	format_precision(conv->precision, &str);
 	return (str);
 }
 
-static char		*parse_str_alt(char *str)
+static char		*parse_str_alt(char *str, t_conv *conv)
 {
-	s_lstr	l;
+	t_lstr	*l;
 
 	l = NULL;
-	ft_lstr_add(&l, )
+	while (*str)
+	{
+		ft_lstr_add(&l, parse_char_bitwise(*str, conv), false);
+		str++;
+		if (str)
+			ft_lstr_add(&l, " ", true);
+	}
+	return (ft_lstr_finish(&l));
 }
-*/
+
 char			*parse_str(t_conv *conv, va_list *ap)
 {
 	char *str;
 
-	conv->precision++;
 	str = (char*)va_arg(*ap, char*);
-	//if (!(conv->flags & HASH_FLAG))
+	if (conv->flags & HASH_FLAG)
+		return (parse_str_alt(str, conv));
+	else
 		return (ft_strdup(str));
-	//else
-	//	return (parse_str_alt(str));
 	
 }
