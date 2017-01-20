@@ -17,7 +17,7 @@
 #include <string.h>
 #include <stdarg.h>
 
-static uintmax_t	get_num(t_conv *conv, va_list *ap)
+static uintmax_t	get_num_singed(t_conv *conv, va_list *ap)
 {
 	if (conv->length == HH_LENGTH)
 	{
@@ -37,23 +37,47 @@ static uintmax_t	get_num(t_conv *conv, va_list *ap)
 	}
 	else if (conv->length == J_LENGTH)
 	{
-		return (uintmax_t)va_arg(*ap, uintmax_t);
+		return (intmax_t)va_arg(*ap, intmax_t);
 	}
 	else if (conv->length == Z_LENGTH)
 	{
 		return ((size_t)va_arg(*ap, size_t));
 	}
-	else if (conv->letter == 'D' || conv->letter == 'U')
-	{
-		return ((intmax_t)((long int)va_arg(*ap, long int)));
-	}
-	else if (ft_strchr("oOuxXb", conv->letter))
-	{
-		return ((unsigned int)va_arg(*ap, int));
-	}
 	else
 	{
 		return ((intmax_t)((int)va_arg(*ap, int)));
+	}
+}
+
+static uintmax_t	get_num_unsinged(t_conv *conv, va_list *ap)
+{
+	if (conv->length == HH_LENGTH)
+	{
+		return ((uintmax_t)((unsigned char)va_arg(*ap, int)));
+	}
+	else if (conv->length == H_LENGTH)
+	{
+		return ((uintmax_t)((unsigned short)va_arg(*ap, int)));
+	}
+	else if (conv->length == L_LENGTH)
+	{
+		return ((uintmax_t)((unsigned long int)va_arg(*ap, long int)));
+	}
+	else if (conv->length == LL_LENGTH)
+	{
+		return ((uintmax_t)((unsigned long long int)va_arg(*ap, long long int)));
+	}
+	else if (conv->length == J_LENGTH)
+	{
+		return (uintmax_t)va_arg(*ap, intmax_t);
+	}
+	else if (conv->length == Z_LENGTH)
+	{
+		return ((size_t)va_arg(*ap, size_t));
+	}
+	else
+	{
+		return ((uintmax_t)((unsigned int)va_arg(*ap, int)));
 	}
 }
 
@@ -90,8 +114,10 @@ char				*num_to_string(t_conv *conv, uintmax_t num)
 char				*parse_int(t_conv *conv, va_list *ap)
 {
 	uintmax_t	result;
-
-	result = get_num(conv, ap);
+	if (conv->letter == 'd' || conv->letter == 'i')
+		result = get_num_singed(conv, ap);
+	else
+		result = get_num_unsinged(conv, ap);
 	result = handle_singed(conv, result);
 	return (num_to_string(conv, result));
 }

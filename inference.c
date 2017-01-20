@@ -13,6 +13,7 @@
 #include <ft_printf.h>
 #include <string.h>
 #include <stdint.h>
+#include <libft.h>
 
 static const int	g_length_index[] = {
 	sizeof(int) * 8,
@@ -38,10 +39,22 @@ static void		inference_s_alt(t_conv *conv)
 	}
 }
 
+static void		inference_DOU(t_conv *conv)
+{
+	conv->length = L_LENGTH;
+	conv->letter = ft_tolower(conv->letter);
+}
+
+/*
+** inference handles shortcuts like D or O conversion characters
+*/
+
 void			inference(t_conv *conv)
 {
 	if (conv->letter == 'b')
 		inference_b(conv);
-	if (conv->letter == 's' && (conv->flags & HASH_FLAG))
+	else if (conv->letter == 's' && (conv->flags & HASH_FLAG))
 		inference_s_alt(conv);
+	else if (ft_strchr("DOU", conv->letter))
+		inference_DOU(conv);
 }
