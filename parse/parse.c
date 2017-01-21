@@ -20,7 +20,7 @@ char			*parse(t_conv *conv, va_list *ap)
 	if (conv->letter == 's' || conv->letter == 'S')
 	{
 		if (conv->length == L_LENGTH || conv->letter == 'S')
-			return (parse_str_wide(ap));
+			return (parse_str_wide(conv, ap));
 		else
 			return (parse_str(conv, ap));
 	}

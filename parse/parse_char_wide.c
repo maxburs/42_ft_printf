@@ -16,6 +16,5 @@
 
 char		*parse_char_wide(va_list *ap)
 {
-	va_arg(*ap, wint_t);
-	return (ft_strdup("ERROR WIDE CHARACTORS NOT SUPPORTED"));
+	return ((char*)(ft_utf_32_8((wint_t)va_arg(*ap, wint_t))));
 }

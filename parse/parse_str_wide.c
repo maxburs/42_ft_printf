@@ -13,9 +13,60 @@
 #include <stdarg.h>
 #include <wchar.h>
 #include <libft.h>
+#include <string.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <ft_printf.h>
 
-char		*parse_str_wide(va_list *ap)
+#include <stdio.h>
+
+static char		*parse_char_bitwise(wchar_t c, t_conv *conv)
 {
-	va_arg(*ap, wchar_t);
-	return (ft_strdup("ERROR WIDE CHARACTORS NOT SUPPORTED"));
+	char	*str;
+
+	str = ft_itoa_base((uintmax_t)c, 2, true);
+	format_precision(conv->precision, &str);
+	return (str);
+}
+
+static char		*alt(t_conv *conv, wchar_t *wstr)
+{
+	t_lstr	*l;
+
+	l = NULL;
+	while (*wstr)
+	{
+		ft_lstr_add(&l, parse_char_bitwise(*wstr, conv), false);
+		wstr++;
+		if (wstr)
+			ft_lstr_add(&l, " ", true);
+	}
+	return (ft_lstr_finish(&l));
+}
+
+static char		*reg(wchar_t *wstr)
+{
+	unsigned char	*c;
+	t_lstr			*l;
+	
+	l = NULL;
+	c = ft_utf_16_8(&wstr);
+	ft_lstr_add(&l, (char*)c, false);
+	while (*c)
+	{
+		c = ft_utf_16_8(&wstr);
+		ft_lstr_add(&l, (char*)c, false);
+	}
+	return (ft_lstr_finish(&l));
+}
+
+char		*parse_str_wide(t_conv *conv, va_list *ap)
+{
+	wchar_t			*wstr;
+
+	wstr = va_arg(*ap, wchar_t*);
+	if (conv->flags & HASH_FLAG)
+		return (alt(conv, wstr));
+	else
+		return (reg(wstr));
 }

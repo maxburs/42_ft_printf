@@ -67,7 +67,7 @@ char			*parse_int(t_conv *conv, va_list *ap);
 char			*num_to_string(t_conv *conv, uintmax_t num);
 char			*parse_ptr(va_list *ap);
 char			*parse_str(t_conv *conv, va_list *ap);
-char			*parse_str_wide(va_list *ap);
+char			*parse_str_wide(t_conv *conv, va_list *ap);
 
 /*
 ** format.c
