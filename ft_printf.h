@@ -45,6 +45,7 @@ typedef	struct	s_conv
 ** ft_printf.c
 */
 int				ft_printf(const char *format, ...);
+int				ft_asprintf(char **ret, const char *format, ...);
 
 /*
 ** inference.c

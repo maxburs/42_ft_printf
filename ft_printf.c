@@ -15,6 +15,9 @@
 #include <ft_printf.h>
 #include <libft.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+#include <stdio.h>
 
 /*
 ** b conversion character: print an integers bits
@@ -45,21 +48,13 @@ static char		*handle_conv(const char **format, va_list *ap)
 	return (result);
 }
 
-static void		print_arg(char *str)
+static int			st_vasprintf(char **ret, const char *format, va_list *ap)
 {
-	if (!str)
-		return ;
-	ft_putstr(str);
-	free(str);
-}
-
-int				ft_printf(const char *format, ...)
-{
-	va_list		ap;
 	int			len;
 	t_lstr		*l;
+	char		*swap;
 
-	va_start(ap, format);
+	l = NULL;
 	while (*format)
 	{
 		len = ft_strchri(format, '%');
@@ -73,7 +68,14 @@ int				ft_printf(const char *format, ...)
 			format++;
 			if (*format != '%')
 			{
-				ft_lstr_add(&l, handle_conv(&format, &ap), false);
+				swap = handle_conv(&format, ap);
+				if (swap)
+					ft_lstr_add(&l, swap, false);
+				else
+				{
+					free(ft_lstr_finish(&l));
+					return (-1);
+				}
 			}
 			else
 			{
@@ -81,19 +83,36 @@ int				ft_printf(const char *format, ...)
 				format++;
 			}
 		}
-		/*
-		if (*format == '%')
-		{
-
-		}
 		else
 		{
-			write(1, format, 1);
-			format++;
+			ft_lstr_add(&l, ft_strdup(format), false);
+			break;
 		}
-		*/
 	}
-	ft_pustr(ft_lstr_finish(&l));
+	*ret = (ft_lstr_finish(&l));
+	return (ft_strlen(*ret));
+}
+
+int				ft_asprintf(char **ret, const char *format, ...)
+{
+	va_list		ap;
+	int			len;
+
+	va_start(ap, format);
+	len = st_vasprintf(ret, format, &ap);
 	va_end(ap);
-	return (0);
+	return (len);
+}
+
+int				ft_printf(const char *format, ...)
+{
+	va_list		ap;
+	char		*str;
+	int			len;
+
+	va_start(ap, format);
+	len = st_vasprintf(&str, format, &ap);
+	va_end(ap);
+	ft_putstr(str);
+	return (len);
 }
