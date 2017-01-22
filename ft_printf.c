@@ -56,24 +56,44 @@ static void		print_arg(char *str)
 int				ft_printf(const char *format, ...)
 {
 	va_list		ap;
+	int			len;
+	t_lstr		*l;
 
 	va_start(ap, format);
 	while (*format)
 	{
-		if (*format == '%')
+		len = ft_strchri(format, '%');
+		if (len > 0)
+		{
+			ft_lstr_add(&l, ft_strndup(format, len), false);
+			format += len;
+		}
+		else if (*format == '%')
 		{
 			format++;
 			if (*format != '%')
 			{
-				print_arg(handle_conv(&format, &ap));
+				ft_lstr_add(&l, handle_conv(&format, &ap), false);
 			}
+			else
+			{
+				ft_lstr_add(&l, "%", true);
+				format++;
+			}
+		}
+		/*
+		if (*format == '%')
+		{
+
 		}
 		else
 		{
 			write(1, format, 1);
 			format++;
 		}
+		*/
 	}
+	ft_pustr(ft_lstr_finish(&l));
 	va_end(ap);
 	return (0);
 }
