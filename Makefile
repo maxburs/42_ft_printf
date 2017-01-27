@@ -29,6 +29,12 @@ ifdef DEBUG
 	CFLAGS += -g
 	MAKE_ARGS += DEBUG=1
 endif
+ifndef UNICODE
+	SRCS += wide_mask_hack.c
+endif
+ifdef UNICODE
+	SRCS += wide_mask_unicode.c
+endif
 
 all: $(NAME)
 

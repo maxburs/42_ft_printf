@@ -18,8 +18,6 @@
 #include <stdint.h>
 #include <ft_printf.h>
 
-#include <stdio.h>
-
 static char		*parse_char_bitwise(wchar_t c, t_conv *conv)
 {
 	char	*str;
@@ -50,12 +48,12 @@ static char		*reg(wchar_t *wstr)
 	t_lstr			*l;
 	
 	l = NULL;
-	c = ft_utf_32_8(*wstr);
+	c = ft_utf_32_8_mask(*wstr);
 	ft_lstr_add(&l, (char*)c, false);
 	wstr++;
 	while (*c)
 	{
-		c = ft_utf_32_8(*wstr);
+		c = ft_utf_32_8_mask(*wstr);
 		ft_lstr_add(&l, (char*)c, false);
 		wstr++;
 	}

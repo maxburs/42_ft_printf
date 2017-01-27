@@ -31,6 +31,7 @@
 # include <stdarg.h>
 # include <string.h>
 # include <stdint.h>
+# include <wchar.h>
 
 typedef	struct	s_conv
 {
@@ -75,6 +76,11 @@ char			*parse_str_wide(t_conv *conv, va_list *ap);
 */
 char			*format_str(t_conv *conv, char *str);
 void			format_precision(size_t precision, char **str);
+
+/*
+** wide_mask_unicode.c / wide_mask_hack.c
+*/
+unsigned char    	*ft_utf_32_8_mask(wint_t c);
 
 /*
 ** debug.c

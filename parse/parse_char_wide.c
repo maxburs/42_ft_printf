@@ -13,8 +13,9 @@
 #include <libft.h>
 #include <wchar.h>
 #include <stdarg.h>
+#include <ft_printf.h>
 
 char		*parse_char_wide(va_list *ap)
 {
-	return ((char*)(ft_utf_32_8((wint_t)va_arg(*ap, wint_t))));
+	return ((char*)(ft_utf_32_8_mask((wint_t)va_arg(*ap, wint_t))));
 }

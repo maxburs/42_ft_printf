@@ -46,7 +46,9 @@ char			*parse_str(t_conv *conv, va_list *ap)
 	char *str;
 
 	str = (char*)va_arg(*ap, char*);
-	if (conv->flags & HASH_FLAG)
+	if (!str)
+		return (ft_strdup("(null)"));
+	else if (conv->flags & HASH_FLAG)
 		return (parse_str_alt(str, conv));
 	else
 		return (ft_strdup(str));

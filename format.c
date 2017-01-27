@@ -146,16 +146,27 @@ static void		handle_hash_o(t_conv *conv, char *str)
 		conv->precision = length + 1;
 }
 
-static void		handle_hash_x(t_conv *conv, char **str)
+static void		precision_hash_x(t_conv *conv, char **str)
 {
 	char	*swap;
 
-	if ((conv->letter != 'x' && conv->letter != 'X') \
-			|| !(conv->flags & HASH_FLAG))
-		return ;
-	swap = ft_strjoin(conv->letter == 'X' ? "0X" : "0x", *str);
-	free(*str);
-	*str = swap;
+	if (!**str || ((*str)[0] == '0' && (*str)[1] == '\0'))
+	{
+		format_min_width(conv, str);
+	}
+	else if (conv->min_width > ft_strlen(*str) + 2
+				&& (conv->flags & ZERO_FLAG) && !(conv->flags & IS_NEG))
+	{
+		format_min_width(conv, str);
+		(*str)[1] = conv->letter;
+	}
+	else
+	{
+		swap = ft_strjoin(conv->letter == 'X' ? "0X" : "0x", *str);
+		free(*str);
+		*str = swap;
+		format_min_width(conv, str);
+	}
 }
 
 char			*format_str(t_conv *conv, char *str)
@@ -165,8 +176,9 @@ char			*format_str(t_conv *conv, char *str)
 		format_precision(conv->precision, &str);
 	else if (conv->flags & HAS_PRECISION)
 		format_precision_str(conv->precision, &str);
-	handle_hash_x(conv, &str);
-	if (conv->min_width > ft_strlen(str) && is_zero_fill(conv))
+	if ((conv->letter == 'x' || conv->letter == 'X') && (conv->flags & HASH_FLAG))
+		precision_hash_x(conv, &str);
+	else if (conv->min_width > ft_strlen(str) && is_zero_fill(conv))
 	{
 		format_min_width(conv, &str);
 		add_sign(conv, &str, true);
@@ -176,6 +188,5 @@ char			*format_str(t_conv *conv, char *str)
 		add_sign(conv, &str, false);
 		format_min_width(conv, &str);
 	}
-	format_min_width(conv, &str);
 	return (str);
 }
