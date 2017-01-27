@@ -24,7 +24,7 @@ static int		handle_null_c(t_conv *conv, char *str)
 {
 	if (conv->letter == 'c' && !*str)
 	{
-		//write(1, "", 1);
+		write(1, "", 1);
 		if (conv->min_width)
 			conv->min_width -= 1;
 		return (1);
