@@ -54,6 +54,20 @@ void			format_precision(size_t precision, char **str)
 	}
 }
 
+static void		format_precision_str(size_t precision, char **str)
+{
+	size_t	length;
+	char	*swap;
+
+	length = ft_strlen(*str);
+	if (precision < length)
+	{
+		swap = ft_strndup(*str, precision);
+		free(*str);
+		*str = swap;
+	}
+}
+
 static _Bool	is_zero_fill(t_conv *conv)
 {
 	return ((!(conv->flags & MINUS_FLAG)) \
@@ -147,7 +161,10 @@ static void		handle_hash_x(t_conv *conv, char **str)
 char			*format_str(t_conv *conv, char *str)
 {
 	handle_hash_o(conv, str);
-	format_precision(conv->precision, &str);
+	if (conv->letter != 's' && conv->letter != 'c')
+		format_precision(conv->precision, &str);
+	else if (conv->flags & HAS_PRECISION)
+		format_precision_str(conv->precision, &str);
 	handle_hash_x(conv, &str);
 	if (conv->min_width > ft_strlen(str) && is_zero_fill(conv))
 	{

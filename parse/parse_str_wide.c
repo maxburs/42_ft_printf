@@ -50,12 +50,14 @@ static char		*reg(wchar_t *wstr)
 	t_lstr			*l;
 	
 	l = NULL;
-	c = ft_utf_16_8(&wstr);
+	c = ft_utf_32_8(*wstr);
 	ft_lstr_add(&l, (char*)c, false);
+	wstr++;
 	while (*c)
 	{
-		c = ft_utf_16_8(&wstr);
+		c = ft_utf_32_8(*wstr);
 		ft_lstr_add(&l, (char*)c, false);
+		wstr++;
 	}
 	return (ft_lstr_finish(&l));
 }

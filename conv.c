@@ -34,7 +34,7 @@ void					zero_conv(t_conv *conv)
 	conv->flags = 0;
 	conv->length = 0;
 	conv->min_width = 0;
-	conv->precision = 0;
+	conv->precision = 1;
 }
 
 static unsigned int		match_flags(char c)
