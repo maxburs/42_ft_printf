@@ -15,21 +15,17 @@
 #include <libft.h>
 #include <ft_printf.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 char		*parse_ptr(va_list *ap)
 {
 	void	*ptr;
-	size_t	size;
-	t_conv	tmp_conv;
 	char	*str1;
 	char	*str2;
 
-	zero_conv(&tmp_conv);
-	size = sizeof(void*);
-	tmp_conv.letter = 'x';
-	tmp_conv.precision = size * 2;
 	ptr = (void*)va_arg(*ap, void*);
-	str1 = num_to_string(&tmp_conv, (uintmax_t)ptr);
+	str1 = ft_itoa_base((uintmax_t)ptr, 16, false);
+	format_precision(1, &str1);
 	str2 = ft_strjoin("0x", str1);
 	free(str1);
 	return (str2);
