@@ -93,17 +93,11 @@ void					build_conv(const char **format, t_conv *conv)
 	while (!conv->letter)
 	{
 		if (ft_strchri(g_format_characters, **format) != -1)
-		{
 			conv->letter = **format;
-		}
 		else if ((match = match_flags(**format)))
-		{
 			conv->flags = conv->flags | match;
-		}
 		else if ((match = match_length(**format, conv->length)))
-		{
 			conv->length = match;
-		}
 		else if (**format == '.')
 		{
 			(*format)++;
@@ -111,13 +105,9 @@ void					build_conv(const char **format, t_conv *conv)
 			conv->precision = match_num(format);
 		}
 		else if (ft_isdigit(**format))
-		{
 			conv->min_width = match_num(format);
-		}
 		else if (!**format)
-		{
 			break ;
-		}
 		(*format)++;
 	}
 }

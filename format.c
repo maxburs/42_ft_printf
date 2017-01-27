@@ -154,8 +154,9 @@ static void		precision_hash_x(t_conv *conv, char **str)
 	{
 		format_min_width(conv, str);
 	}
-	else if (conv->min_width > ft_strlen(*str) + 2
-				&& (conv->flags & ZERO_FLAG) && !(conv->flags & IS_NEG))
+	else if ((conv->min_width > ft_strlen(*str) + 2)
+				&& (conv->flags & ZERO_FLAG) && !(conv->flags & IS_NEG)
+				&& !(conv->flags & HAS_PRECISION))
 	{
 		format_min_width(conv, str);
 		(*str)[1] = conv->letter;
