@@ -46,7 +46,10 @@ typedef	struct	s_conv
 ** ft_printf.c
 */
 int				ft_printf(const char *format, ...);
-int				ft_asprintf(char **ret, const char *format, ...);
+/*
+** does not work in molunette branch
+** int				ft_asprintf(char **ret, const char *format, ...);
+*/
 
 /*
 ** inference.c
@@ -78,9 +81,19 @@ char			*format_str(t_conv *conv, char *str);
 void			format_precision(size_t precision, char **str);
 
 /*
+** format_cont.c
+** functions that wouldn't fit in format.c
+*/
+char			*ft_strpad(char *str, size_t n, char c, _Bool back);
+void			format_precision(size_t precision, char **str);
+void			format_precision_str(size_t precision, char **str);
+_Bool			is_zero_fill(t_conv *conv);
+void			format_min_width(t_conv *conv, char **str);
+
+/*
 ** wide_mask_unicode.c / wide_mask_hack.c
 */
-unsigned char    	*ft_utf_32_8_mask(wint_t c);
+unsigned char	*ft_utf_32_8_mask(wint_t c);
 
 /*
 ** debug.c

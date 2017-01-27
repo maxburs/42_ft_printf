@@ -2,8 +2,8 @@ NAME = libftprintf.a
 
 SRCS = \
 	conv.c \
-	debug.c \
 	format.c \
+	format_cont.c \
 	ft_printf.c \
 	inference.c \
 	$(addprefix parse/,\
@@ -28,6 +28,7 @@ endif
 ifdef DEBUG
 	CFLAGS += -g
 	MAKE_ARGS += DEBUG=1
+	SRCS += debug.c
 endif
 ifndef UNICODE
 	SRCS += wide_mask_hack.c

@@ -43,10 +43,7 @@ static uintmax_t	get_num_singed(t_conv *conv, va_list *ap)
 	{
 		return ((size_t)va_arg(*ap, size_t));
 	}
-	else
-	{
-		return ((intmax_t)((int)va_arg(*ap, int)));
-	}
+	return ((intmax_t)((int)va_arg(*ap, int)));
 }
 
 static uintmax_t	get_num_unsinged(t_conv *conv, va_list *ap)
@@ -65,7 +62,7 @@ static uintmax_t	get_num_unsinged(t_conv *conv, va_list *ap)
 	}
 	else if (conv->length == LL_LENGTH)
 	{
-		return ((uintmax_t)((unsigned long long int)va_arg(*ap, long long int)));
+		return ((uintmax_t)((unsigned long long)va_arg(*ap, long long)));
 	}
 	else if (conv->length == J_LENGTH)
 	{
@@ -75,10 +72,7 @@ static uintmax_t	get_num_unsinged(t_conv *conv, va_list *ap)
 	{
 		return ((size_t)va_arg(*ap, size_t));
 	}
-	else
-	{
-		return ((uintmax_t)((unsigned int)va_arg(*ap, int)));
-	}
+	return ((uintmax_t)((unsigned int)va_arg(*ap, int)));
 }
 
 static uintmax_t	handle_singed(t_conv *conv, uintmax_t num)
@@ -114,6 +108,7 @@ char				*num_to_string(t_conv *conv, uintmax_t num)
 char				*parse_int(t_conv *conv, va_list *ap)
 {
 	uintmax_t	result;
+
 	if (conv->letter == 'd' || conv->letter == 'i')
 		result = get_num_singed(conv, ap);
 	else

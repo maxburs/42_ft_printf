@@ -39,7 +39,7 @@ static void		inference_s_alt(t_conv *conv)
 	}
 }
 
-static void		inference_DOU(t_conv *conv)
+static void		inference_dou(t_conv *conv)
 {
 	conv->length = L_LENGTH;
 	conv->letter = ft_tolower(conv->letter);
@@ -56,5 +56,5 @@ void			inference(t_conv *conv)
 	else if (conv->letter == 's' && (conv->flags & HASH_FLAG))
 		inference_s_alt(conv);
 	else if (ft_strchr("DOU", conv->letter))
-		inference_DOU(conv);
+		inference_dou(conv);
 }

@@ -52,5 +52,4 @@ char			*parse_str(t_conv *conv, va_list *ap)
 		return (parse_str_alt(str, conv));
 	else
 		return (ft_strdup(str));
-	
 }

@@ -14,7 +14,7 @@
 #include <wchar.h>
 #include <libft.h>
 
-unsigned char    	*ft_utf_32_8_mask(wint_t c)
+unsigned char		*ft_utf_32_8_mask(wint_t c)
 {
 	char	*str;
 

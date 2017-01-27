@@ -15,104 +15,86 @@
 #include <ft_printf.h>
 #include <libft.h>
 #include <stdlib.h>
-#include <stdbool.h>
-
-#include <stdio.h>
 
 /*
 ** b conversion character: print an integers bits
 */
 
-static char		*handle_conv(const char **format, va_list *ap)
+static int		handle_null_c(t_conv *conv, char *str)
 {
-	char	*result;
+	if (conv->letter == 'c' && !*str)
+	{
+		write(1, "", 1);
+		if (conv->min_width)
+			conv->min_width -= 1;
+		return (1);
+	}
+	return (0);
+}
+
+static int		print_arg(char *str)
+{
+	int		len;
+
+	if (!str)
+		return (0);
+	len = ft_strlen(str);
+	write(1, str, len);
+	free(str);
+	return (len);
+}
+
+static int		handle_conv(const char **format, va_list *ap)
+{
 	t_conv	conv;
+	char	*str;
+	_Bool	null_print;
 
 	build_conv(format, &conv);
 	if (!conv.letter)
 	{
 		ft_putstr_fd("BUILD CONV ERROR", 0);
-		return (NULL);
+		return (0);
 	}
 	inference(&conv);
-	if (!(result = parse(&conv, ap)))
+	if (!(str = parse(&conv, ap)))
 	{
 		ft_putstr_fd("PARSE ERROR", 0);
-		return (NULL);
+		return (0);
 	}
-	if (!(result = format_str(&conv, result)))
+	null_print = handle_null_c(&conv, str);
+	if (!(str = format_str(&conv, str)))
 	{
 		ft_putstr_fd("FORMAT ERROR", 0);
-		return (NULL);
+		return (0);
 	}
-	return (result);
-}
-
-static int			st_vasprintf(char **ret, const char *format, va_list *ap)
-{
-	int			len;
-	t_lstr		*l;
-	char		*swap;
-
-	l = NULL;
-	while (*format)
-	{
-		len = ft_strchri(format, '%');
-		if (len > 0)
-		{
-			ft_lstr_add(&l, ft_strndup(format, len), false);
-			format += len;
-		}
-		else if (*format == '%')
-		{
-			format++;
-			if (*format != '%')
-			{
-				swap = handle_conv(&format, ap);
-				if (swap)
-					ft_lstr_add(&l, swap, false);
-				else
-				{
-					free(ft_lstr_finish(&l));
-					return (-1);
-				}
-			}
-			else
-			{
-				ft_lstr_add(&l, "%", true);
-				format++;
-			}
-		}
-		else
-		{
-			ft_lstr_add(&l, ft_strdup(format), false);
-			break;
-		}
-	}
-	*ret = (ft_lstr_finish(&l));
-	return (ft_strlen(*ret));
-}
-
-int				ft_asprintf(char **ret, const char *format, ...)
-{
-	va_list		ap;
-	int			len;
-
-	va_start(ap, format);
-	len = st_vasprintf(ret, format, &ap);
-	va_end(ap);
-	return (len);
+	return (print_arg(str) + null_print);
 }
 
 int				ft_printf(const char *format, ...)
 {
 	va_list		ap;
-	char		*str;
-	int			len;
+	int			length;
 
+	length = 0;
 	va_start(ap, format);
-	len = st_vasprintf(&str, format, &ap);
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			format++;
+			if (*format != '%')
+			{
+				length += handle_conv(&format, &ap);
+			}
+		}
+		else
+		{
+			write(1, format, 1);
+			format++;
+			length++;
+		}
+	}
 	va_end(ap);
-	ft_putstr(str);
-	return (len);
+	return (length);
 }

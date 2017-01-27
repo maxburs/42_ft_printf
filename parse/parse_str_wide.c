@@ -46,7 +46,7 @@ static char		*reg(wchar_t *wstr)
 {
 	unsigned char	*c;
 	t_lstr			*l;
-	
+
 	l = NULL;
 	c = ft_utf_32_8_mask(*wstr);
 	ft_lstr_add(&l, (char*)c, false);
@@ -60,7 +60,7 @@ static char		*reg(wchar_t *wstr)
 	return (ft_lstr_finish(&l));
 }
 
-char		*parse_str_wide(t_conv *conv, va_list *ap)
+char			*parse_str_wide(t_conv *conv, va_list *ap)
 {
 	wchar_t			*wstr;
 
