@@ -83,10 +83,7 @@ int				ft_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if (*format != '%')
-			{
-				length += handle_conv(&format, &ap);
-			}
+			length += handle_conv(&format, &ap);
 		}
 		else
 		{

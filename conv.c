@@ -14,7 +14,7 @@
 #include <libft.h>
 #include <stdbool.h>
 
-static const char *g_format_characters = "sSpdDioOuUxXcCfFeEgGaAnb";
+static const char *g_format_characters = "sSpdDioOuUxXcCfFeEgGaAnb%";
 
 static const char *g_flag_keys = "#0-+ ";
 static const int g_flag_values[] = {

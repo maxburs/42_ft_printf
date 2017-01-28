@@ -36,9 +36,9 @@ char			*parse(t_conv *conv, va_list *ap)
 			return (parse_char(conv, ap));
 	}
 	else if (conv->letter == 'p')
-	{
 		return (parse_ptr(ap));
-	}
+	else if (conv->letter == '%')
+		return (ft_strdup("%"));
 	else
 		return (NULL);
 }
