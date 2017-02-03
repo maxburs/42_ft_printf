@@ -15,5 +15,5 @@
 
 unsigned char		*ft_utf_32_8_mask(wint_t c)
 {
-	return (ft_utf_32(c));
+	return (ft_utf_32_8(c));
 }
