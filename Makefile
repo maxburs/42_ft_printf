@@ -47,8 +47,11 @@ $(NAME): $(OBJS) ./libft/libft.a
 %.o: %.c
 	gcc $(CFLAGS) -c -I . -I ./libft -o $@ $<
 
-./libft/libft.a:
+./libft/libft.a: force
 	cd libft && $(MAKE) $(MAKE_ARGS)
+
+force:
+	@true
 
 clean:
 	rm -f $(OBJS)
@@ -57,4 +60,4 @@ fclean: clean
 	rm -f $(NAME)
 re: fclean all
 
-.PHONY: clean fclean re ./libft/libft.a
+.PHONY: all clean fclean re
