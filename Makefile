@@ -22,20 +22,6 @@ CFLAGS = -Wall -Wextra
 ifndef WNOERROR
 	CFLAGS += -Werror
 endif
-ifdef WNOERROR
-	MAKE_ARGS += WNOERROR=1
-endif
-ifdef DEBUG
-	CFLAGS += -g
-	MAKE_ARGS += DEBUG=1
-	SRCS += debug.c
-endif
-ifndef UNICODE
-	SRCS += wide_mask_hack.c
-endif
-ifdef UNICODE
-	SRCS += wide_mask_unicode.c
-endif
 
 all: $(NAME)
 
@@ -48,7 +34,7 @@ $(NAME): $(OBJS) ./libft/libft.a
 	gcc $(CFLAGS) -c -I . -I ./libft -o $@ $<
 
 ./libft/libft.a: force
-	cd libft && $(MAKE) $(MAKE_ARGS)
+	cd libft && $(MAKE)
 
 force:
 	@true
