@@ -91,11 +91,6 @@ _Bool			is_zero_fill(t_conv *conv);
 void			format_min_width(t_conv *conv, char **str);
 
 /*
-** wide_mask_unicode.c / wide_mask_hack.c
-*/
-unsigned char	*ft_utf_32_8_mask(wint_t c);
-
-/*
 ** debug.c
 */
 void			print_conv(t_conv *conv);

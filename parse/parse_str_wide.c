@@ -48,12 +48,12 @@ static char		*reg(wchar_t *wstr)
 	t_lstr			*l;
 
 	l = NULL;
-	c = ft_utf_32_8_mask(*wstr);
+	c = ft_utf_32_8(*wstr);
 	lstr_add(&l, (char*)c, false);
 	wstr++;
 	while (*c)
 	{
-		c = ft_utf_32_8_mask(*wstr);
+		c = ft_utf_32_8(*wstr);
 		lstr_add(&l, (char*)c, false);
 		wstr++;
 	}
