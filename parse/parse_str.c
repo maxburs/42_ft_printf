@@ -12,7 +12,6 @@
 
 #include <stdarg.h>
 #include <libft.h>
-#include <libft.h>
 #include <string.h>
 #include <ft_printf.h>
 #include <stdbool.h>
@@ -33,12 +32,12 @@ static char		*parse_str_alt(char *str, t_conv *conv)
 	l = NULL;
 	while (*str)
 	{
-		ft_lstr_add(&l, parse_char_bitwise(*str, conv), false);
+		lstr_add(&l, parse_char_bitwise(*str, conv), false);
 		str++;
 		if (str)
-			ft_lstr_add(&l, " ", true);
+			lstr_add(&l, " ", true);
 	}
-	return (ft_lstr_finish(&l));
+	return (lstr_finish(&l));
 }
 
 char			*parse_str(t_conv *conv, va_list *ap)

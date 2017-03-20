@@ -34,12 +34,12 @@ static char		*alt(t_conv *conv, wchar_t *wstr)
 	l = NULL;
 	while (*wstr)
 	{
-		ft_lstr_add(&l, parse_char_bitwise(*wstr, conv), false);
+		lstr_add(&l, parse_char_bitwise(*wstr, conv), false);
 		wstr++;
 		if (wstr)
-			ft_lstr_add(&l, " ", true);
+			lstr_add(&l, " ", true);
 	}
-	return (ft_lstr_finish(&l));
+	return (lstr_finish(&l));
 }
 
 static char		*reg(wchar_t *wstr)
@@ -49,15 +49,15 @@ static char		*reg(wchar_t *wstr)
 
 	l = NULL;
 	c = ft_utf_32_8_mask(*wstr);
-	ft_lstr_add(&l, (char*)c, false);
+	lstr_add(&l, (char*)c, false);
 	wstr++;
 	while (*c)
 	{
 		c = ft_utf_32_8_mask(*wstr);
-		ft_lstr_add(&l, (char*)c, false);
+		lstr_add(&l, (char*)c, false);
 		wstr++;
 	}
-	return (ft_lstr_finish(&l));
+	return (lstr_finish(&l));
 }
 
 char			*parse_str_wide(t_conv *conv, va_list *ap)
