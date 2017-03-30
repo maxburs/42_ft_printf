@@ -105,7 +105,6 @@ void					build_conv(const char **format, t_conv *conv)
 			if (**format == '*')
 			{
 				conv->flags += VAR_PRECISION_FLAG;
-				(*format)++;
 			}
 			else
 			{
