@@ -20,6 +20,8 @@
 # define SPACE_FLAG 0x10
 # define IS_NEG 0x20
 # define HAS_PRECISION 0x40
+# define VAR_WIDTH_FLAG 0x80
+# define VAR_PRECISION_FLAG 0x100
 
 # define HH_LENGTH 1
 # define H_LENGTH 2
@@ -38,8 +40,8 @@ typedef	struct	s_conv
 	char			letter;
 	unsigned int	flags;
 	unsigned int	length;
-	size_t			min_width;
-	size_t			precision;
+	unsigned int	min_width;
+	unsigned int	precision;
 }				t_conv;
 
 /*

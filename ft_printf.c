@@ -18,6 +18,7 @@
 
 /*
 ** b conversion character: print an integers bits
+** TODO: may no longer be norm
 */
 
 static int		handle_null_c(t_conv *conv, char *str)
@@ -56,6 +57,10 @@ static int		handle_conv(const char **format, va_list *ap)
 		ft_putstr_fd("BUILD CONV ERROR", 0);
 		return (0);
 	}
+	if (conv.flags & VAR_WIDTH_FLAG)
+		conv.min_width = (unsigned int)va_arg(*ap, unsigned int);
+	if (conv.flags & VAR_PRECISION_FLAG)
+		conv.precision = (unsigned int)va_arg(*ap, unsigned int);
 	inference(&conv);
 	if (!(str = parse(&conv, ap)))
 	{

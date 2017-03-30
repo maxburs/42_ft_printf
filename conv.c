@@ -16,13 +16,14 @@
 
 static const char *g_format_characters = "sSpdDioOuUxXcCfFeEgGaAnb%";
 
-static const char *g_flag_keys = "#0-+ ";
+static const char *g_flag_keys = "#0-+ *";
 static const int g_flag_values[] = {
 	HASH_FLAG,
 	ZERO_FLAG,
 	MINUS_FLAG,
 	PLUS_FLAG,
-	SPACE_FLAG
+	SPACE_FLAG,
+	VAR_WIDTH_FLAG
 };
 
 static const char *g_length_values_1 = "__hl_jz";
@@ -101,8 +102,16 @@ void					build_conv(const char **format, t_conv *conv)
 		else if (**format == '.')
 		{
 			(*format)++;
-			conv->flags += HAS_PRECISION;
-			conv->precision = match_num(format);
+			if (**format == '*')
+			{
+				conv->flags += VAR_PRECISION_FLAG;
+				(*format)++;
+			}
+			else
+			{
+				conv->flags += HAS_PRECISION;
+				conv->precision = match_num(format);
+			}
 		}
 		else if (ft_isdigit(**format))
 			conv->min_width = match_num(format);
